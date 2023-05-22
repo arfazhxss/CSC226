@@ -12,24 +12,24 @@ public class QuickSelect {
 	// in the final array.
 	public static int partition(int[] arr, int low, int high)
 	{
-		int pivot = arr[high], pivotloc = low;
+		int pivot = arr[high], pIndex = low;
 		for (int i = low; i <= high; i++) {
 			// inserting elements of less value
 			// to the left of the pivot location
 			if (arr[i] < pivot) {
 				int temp = arr[i];
-				arr[i] = arr[pivotloc];
-				arr[pivotloc] = temp;
-				pivotloc++;
+				arr[i] = arr[pIndex];
+				arr[pIndex] = temp;
+				pIndex++;
 			}
 		}
 
 		// swapping pivot to the final pivot location
-		int temp = arr[high];
-		arr[high] = arr[pivotloc];
-		arr[pivotloc] = temp;
+		int temp = arr[high];       // arr[high] = was the location of previous PivotIndex = changed to temp
+		arr[high] = arr[pIndex];    // arr[pIndex] = was the location of <P Pointer Index> = cahnged to arr[high]
+		arr[pIndex] = temp;         // we are swapping high (prev-arr-location) and pIndex
 
-		return pivotloc;
+		return pIndex;
 	}
 
 	// finds the kth position (of the sorted array)
