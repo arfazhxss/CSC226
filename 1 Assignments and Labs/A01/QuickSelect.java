@@ -16,34 +16,35 @@ public class QuickSelect {
 	// invocation
 	public static int QS(int[] S, int k){
         if (S.length==1) {return S[0];}
-        return quickSelect(0, S.length - 1, S, k);
+        return quickSelect(0, S.length - 1, S, k - 1);
 	}
 	
 	// TODO recursive quickSelect
     private static int quickSelect(int left, int right, int[] array, int k){
+		++k;
 		//TODO if there is only one element, return
 		if (k < 1 || k > array.length) {
             return 999;
         }
 
 		//TODO pick a random pivot
-		int pIndex = pickRandomPivot(left, right);
+		int pivotIndex = pickRandomPivot(left, right);
         //TODO partition the array using the pivot
-        int pivotIndex = partition(left, right, array, pIndex);
-        int sizeLeft = pivotIndex - left + 1;
+        int currMidIndex = partition(left, right, array, pivotIndex);
+        int sizeLeft = currMidIndex - left + 1;
         
 		// Base case 1
         if (left == right) {
             return array[left];
         }
 
-        // Perform comparisons and recurse in binary search / quicksort fashion
+		// Base case 2
         if (sizeLeft == k) {
-            return array[pivotIndex];
+            return array[currMidIndex];
         } else if (sizeLeft > k) {
-            return quickSelect(left, pivotIndex - 1, array, k);
+            return quickSelect(left, currMidIndex - 1, array, k - 1);
         } else {
-            return quickSelect(pivotIndex + 1, right, array, k - sizeLeft);
+            return quickSelect(currMidIndex + 1, right, array, k - sizeLeft - 1);
         }
     }
     // TODO partition an array around a pivot

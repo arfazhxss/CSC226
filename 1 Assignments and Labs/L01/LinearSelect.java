@@ -38,8 +38,7 @@ public class LinearSelect {
     		return array[eIndex];
     	}else{
     		return linearSelect(eIndex+1,right,array,k);
-    	}
-
+    	} 
     }
 	
     //do Partition with a pivot
