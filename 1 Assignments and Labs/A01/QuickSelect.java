@@ -10,7 +10,7 @@
 // Your task is to complete the code, and test your solution using the testing harness in main().
 
 import java.util.Random;
-import java.util.*;
+import java.util.Arrays;
 
 public class QuickSelect {
 	// invocation
@@ -21,19 +21,21 @@ public class QuickSelect {
 	
 	// TODO recursive quickSelect
     private static int quickSelect(int left, int right, int[] array, int k){
+		//TODO if there is only one element, return
 		if (k < 1 || k > array.length) {
             return 999;
         }
 
-        // Base case
+		//TODO pick a random pivot
+		int pIndex = pickRandomPivot(left, right);
+        //TODO partition the array using the pivot
+        int pivotIndex = partition(left, right, array, pIndex);
+        int sizeLeft = pivotIndex - left + 1;
+        
+		// Base case 1
         if (left == right) {
             return array[left];
         }
-
-		int pIndex = pickRandomPivot(left, right);
-        // Partition the sublist into two halves
-        int pivotIndex = partition(left, right, array, pIndex);
-        int sizeLeft = pivotIndex - left +1;
 
         // Perform comparisons and recurse in binary search / quicksort fashion
         if (sizeLeft == k) {
@@ -49,18 +51,19 @@ public class QuickSelect {
     	//move pivot to last index of the array
     	swap(array,pIndex,right);
 
-    	int p=array[right];
-    	int l=left;
-    	int r=right-1;
+    	int pointer=array[right];
+    	int leftIndex=left;
+    	int rightIndex=right-1;
   
-    	while(l<=r){
-    		while(l<=r && array[l]<=p) {l++;}
-    		while(l<=r && array[r]>=p) {r--;}
-    		if (l<r) {swap(array,l,r);}
+    	while(leftIndex<=rightIndex){
+    		while(leftIndex<=rightIndex && array[leftIndex]<=pointer) {leftIndex++;}
+    		while(leftIndex<=rightIndex && array[rightIndex]>=pointer) {rightIndex--;}
+    		if (leftIndex<rightIndex) {swap(array,leftIndex,rightIndex);}
     	}
 
-        swap(array,l,right);
-    	return l;
+		// moving pivot from the last index to the left pointer location (right before the right pointer)
+        swap(array,leftIndex,right);
+    	return leftIndex;
     }
 
     // random pivot generator
